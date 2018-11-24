@@ -1,19 +1,18 @@
 package com.company.ProcessApplication;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+        import static org.assertj.core.api.Assertions.assertThat;
 
-import com.company.ProcessApplication.Model.*;
-import com.company.ProcessApplication.Repository.*;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
+        import com.company.ProcessApplication.Model.*;
+        import com.company.ProcessApplication.Repository.*;
+        import org.junit.Before;
+        import org.junit.Test;
+        import org.junit.runner.RunWith;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+        import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
-import java.time.LocalDate;
+        import java.io.IOException;
+        import java.time.LocalDate;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -148,17 +147,10 @@ public class NcProcessApplicationRepositoryTest {
         admin = userDAO.save(admin);
         User repoUser = userDAO.findById(admin.getName()).orElse(null);
         repoUser.setPass("qwerty");
-        repoUser = userDAO.save(repoUser);
 
         User output = userDAO.findById(admin.getName()).orElse(null);
         assertThat(output.getName()).isEqualTo(admin.getName());
         assertThat(output.getPass()).isEqualTo(repoUser.getPass());
-
-        int count = 0;
-        for (User U : userDAO.findAll()) {
-            count++;
-        }
-        assertThat(count).isEqualTo(1);
     }
 
     @Test
@@ -168,7 +160,6 @@ public class NcProcessApplicationRepositoryTest {
         testRole = roleDAO.save(testRole);
         Role repoRole = roleDAO.findById(testRole.getId()).orElse(null);
         repoRole.setRolename("ROLE_MANAGER");
-        repoRole = roleDAO.save(repoRole);
 
         Role output = roleDAO.findById(testRole.getId()).orElse(null);
         assertThat(output.getUser()).isEqualTo(testRole.getUser());
@@ -180,7 +171,6 @@ public class NcProcessApplicationRepositoryTest {
         internet100 = specificationDAO.save(internet100);
         Specification repoSpec = specificationDAO.findById(internet100.getId()).orElse(null);
         repoSpec.setSpeed(new Long(88));
-        repoSpec = specificationDAO.save(repoSpec);
 
         Specification output = specificationDAO.findById(internet100.getId()).orElse(null);
         assertThat(output.getCost()).isEqualTo(internet100.getCost());
@@ -195,7 +185,6 @@ public class NcProcessApplicationRepositoryTest {
         testOrder = orderDAO.save(testOrder);
         Order repoOrder = orderDAO.findById(testOrder.getId()).orElse(null);
         repoOrder.setStatus(OrderStatus.Completed);
-        repoOrder = orderDAO.save(repoOrder);
 
         Order output = orderDAO.findById(testOrder.getId()).orElse(null);
         assertThat(output.getType()).isEqualTo(testOrder.getType());
@@ -209,7 +198,6 @@ public class NcProcessApplicationRepositoryTest {
         testService = serviceDAO.save(testService);
         Service repoService = serviceDAO.findById(testService.getId()).orElse(null);
         repoService.setStatus(ServiceStatus.Disconnected);
-        repoService = serviceDAO.save(repoService);
 
         Service output = serviceDAO.findById(testService.getId()).orElse(null);
         assertThat(output.getStartDate()).isEqualTo(testService.getStartDate());
@@ -218,15 +206,15 @@ public class NcProcessApplicationRepositoryTest {
 
 
     /********************************
-     * Update tests                 *
+     * Remove tests                 *
      ********************************/
     @Test
     public void removeUserFromRepo() {
         admin = userDAO.save(admin);
         User retrieveOutput = userDAO.findById(admin.getName()).orElse(null);
+
         assertThat(retrieveOutput).isEqualTo(admin);
         userDAO.delete(admin);
-
         User removeOutput = userDAO.findById(admin.getName()).orElse(null);
         assertThat(removeOutput).isNull();
     }
